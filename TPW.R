@@ -6,7 +6,7 @@ TPWdatabaseUpdate <- function(folderURL, updateDate, eventName){
   for(i in 1:length(calcFileList$id)){
     tmpCalc <- calcFileList$drive_resource[[i]]$webViewLink
     
-    tmp2 <- data.frame(read_sheet(ss = tmpCalc, sheet = 'Calculator'), check.names = FALSE)
+    tmp2 <- data.frame(read_sheet(ss = tmpCalc, sheet = 'Calculator - Outdoor'), check.names = FALSE)
     
     pilotName <- tmp2[[1,3]]
     mapSelection <- tmp2[[2,3]]
