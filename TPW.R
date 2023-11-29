@@ -1,6 +1,6 @@
+#Packages#####
 require(googlesheets4)
 require(googledrive)
-
 
 #Functions#####
 TPWdatabaseUpdate <- function(folderURL, updateDate, eventName){
@@ -45,6 +45,7 @@ TPWdatabaseUpdate <- function(folderURL, updateDate, eventName){
     tmp3 <- setNames(tmp3, c('#', 'TRICK', 'POINTS', 'EXECUTION', 'COMBO'))
     tmp3 <- tmp3[, c('#', 'TRICK', 'EXECUTION', 'COMBO', 'POINTS')]
     tmp3 <- na.omit(tmp3)
+    baseTricks <- data.frame(baseTricks, 'EXECUTION' = tmp3[,'EXECUTION'])
     
     tmpList <- list('PILOT NAME' = pilotName,
                     'MAP SELECTION' = mapSelection,
