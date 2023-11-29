@@ -1,12 +1,26 @@
+require(googlesheets4)
+require(googledrive)
+
+
 #Functions#####
 TPWdatabaseUpdate <- function(folderURL, updateDate, eventName){
   calcFileList <- drive_ls(folderURL)
-  TPWdatabase <- readRDS('D:/Documents/R/Scripts/TPWApp/TPWDatabase.RDS')
+  # TPWdatabase <- readRDS('D:/Documents/R/Scripts/TPWApp/TPWDatabase.RDS')
+  TPWdatabase <- readRDS('C:/Users/josha/OneDrive/Documents/GitHub/TPWShinyAppFullServerVersion/TyrantProWhooper/app/Leaderboard/TPWDatabase.RDS')
   
   for(i in 1:length(calcFileList$id)){
     tmpCalc <- calcFileList$drive_resource[[i]]$webViewLink
     
     tmp2 <- data.frame(read_sheet(ss = tmpCalc, sheet = 'Calculator - Outdoor'), check.names = FALSE)
+    
+    if(tmp2[11,'...2'] == 'Click here to start'){
+      tmp2 <- data.frame(read_sheet(ss = tmpCalc, sheet = 'Calculator - Indoor'), check.names = FALSE)
+      baseTricks <- na.omit(tmp2[ ,'...36', drop = FALSE])
+      baseTricks <- setNames(tail(baseTricks, -1), 'BaseTricks')
+    } else {
+      baseTricks <- na.omit(tmp2[ ,'...36', drop = FALSE])
+      baseTricks <- setNames(tail(baseTricks, -1), 'BaseTricks')
+    }
     
     pilotName <- tmp2[[1,3]]
     mapSelection <- tmp2[[2,3]]
@@ -30,6 +44,7 @@ TPWdatabaseUpdate <- function(folderURL, updateDate, eventName){
     tmp3 <- tmp3[,-c(6:ncol(tmp3))]
     tmp3 <- setNames(tmp3, c('#', 'TRICK', 'POINTS', 'EXECUTION', 'COMBO'))
     tmp3 <- tmp3[, c('#', 'TRICK', 'EXECUTION', 'COMBO', 'POINTS')]
+    tmp3 <- na.omit(tmp3)
     
     tmpList <- list('PILOT NAME' = pilotName,
                     'MAP SELECTION' = mapSelection,
@@ -46,19 +61,20 @@ TPWdatabaseUpdate <- function(folderURL, updateDate, eventName){
                     'HIGHEST POINT TRICK' = highPoint,
                     'TRICK OF THE WEEK COUNT' = totwCompleted,
                     'SCORE CARD' = tmp3,
-                    'EVENT DATE' = updateDate
+                    'EVENT DATE' = updateDate,
+                    'BASE TRICKS' = baseTricks
                     )
     
-    #TPWdatabase <- list()
     TPWdatabase[[pilotName]][[eventName]] <- tmpList
-    saveRDS(TPWdatabase, 'D:/Documents/R/Scripts/TPWApp/TPWDatabase.RDS')
+    #saveRDS(TPWdatabase, 'D:/Documents/R/Scripts/TPWApp/TPWDatabase.RDS')
+    saveRDS('C:/Users/josha/OneDrive/Documents/GitHub/TPWShinyAppFullServerVersion/TyrantProWhooper/app/Leaderboard/TPWDatabase.RDS')
   }
   return(TPWdatabase)
 }
 
 #Update Database####
-# folderURL. <- 'https://drive.google.com/drive/folders/1nAecmg0ccWO3p8EHmsD3Q5xh06Sdr5Jg'
-# folderURL. <- 'https://drive.google.com/drive/folders/1NJCvRyrZcszw3MdThqSVVx5AcUY88tIx'
+ # folderURL. <- 'https://drive.google.com/drive/folders/1nAecmg0ccWO3p8EHmsD3Q5xh06Sdr5Jg'
+ # folderURL. <- 'https://drive.google.com/drive/folders/1NJCvRyrZcszw3MdThqSVVx5AcUY88tIx'
 
 updateDate. <- '2024-01-31'
 eventName. <- 'Event 7'
