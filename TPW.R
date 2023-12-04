@@ -3,16 +3,48 @@ require(googlesheets4)
 require(googledrive)
 
 #Functions#####
-TPWdatabaseUpdate <- function(folderURL, updateDate, eventName){
-  calcFileList <- drive_ls(folderURL)
-  # TPWdatabase <- readRDS('D:/Documents/R/Scripts/TPWApp/TPWDatabase.RDS')
-  TPWdatabase <- readRDS('C:/Users/josha/OneDrive/Documents/GitHub/TPWShinyAppFullServerVersion/TyrantProWhooper/app/Leaderboard/TPWDatabase.RDS')
+pilotEmailtoName <- function(fileURL){
+  officialPilotNames <- readRDS('C:/Users/josha/OneDrive/Documents/GitHub/TPW-Database-Updater/OfficialPilotNames.RDS')
+  tmp <- data.frame(read_sheet(ss = fileURL), check.names = FALSE)
+  tmp2 <- data.frame('email' = tmp$Username,
+                     'pilotName' = tmp$`What's your pilot name?`, 
+                     check.names = FALSE)
   
-  for(i in 1:length(calcFileList$id)){
-    tmpCalc <- calcFileList$drive_resource[[i]]$webViewLink
+  newNames <- tmp2[!tmp2$email %in% officialPilotNames$email,]
+  if(nrow(newNames) >= 1){
+    officialPilotNames <- rbind(officialPilotNames, newNames)
+    saveRDS(officialPilotNames, 'C:/Users/josha/OneDrive/Documents/GitHub/TPW-Database-Updater/OfficialPilotNames.RDS')
+  }
+  repeatPilotNames <- table(officialPilotNames$pilotName)
+  repeatPilotNames <- names(repeatPilotNames[repeatPilotNames >= 2])
+  if(length(repeatPilotNames) != 0){
+    print(repeatPilotNames)
+  }
+}
+
+fileURL <- 'https://docs.google.com/spreadsheets/d/1G7NemlbABou_bNX7FS9Km7fsuSZO-Aqg9STy_oCUgYM/edit#gid=467078288'
+TPWdatabaseUpdate <- function(fileURL, updateDate, eventName){
+  TPWdatabase <- readRDS('D:/Documents/R/Scripts/TPWApp/TPWDatabase.RDS')
+  #TPWdatabase <- readRDS('C:/Users/josha/OneDrive/Documents/GitHub/TPWShinyAppFullServerVersion/TyrantProWhooper/app/Leaderboard/TPWDatabase.RDS')
+  officialPilotNames <- readRDS('C:/Users/josha/OneDrive/Documents/GitHub/TPW-Database-Updater/OfficialPilotNames.RDS')
+  
+  tmp <- data.frame(read_sheet(ss = fileURL), check.names = FALSE)
+  repeateUploads <- table(tmp$Username)
+  repeateUploads <- repeateUploads[repeateUploads >= 2]
+  
+  for(j in 1:length(repeateUploads)){
+    tmpDeduped <- tail(tmp[tmp$Username == names(repeateUploads[j]),], 1)
+    tmp <- tmp[tmp$Username != names(repeateUploads[j]), ]
+    tmp <- rbind(tmp, tmpDeduped)
+  }
+
+  for(i in 1:length(tmp$`Please upload your Google Sheets calculator scorecard here.`)){
+    #i = 3
+    tmpCalc <- tmp$`Please upload your Google Sheets calculator scorecard here.`[i]
+    tmpEmail <- tmp$Username[i]
     
     tmp2 <- data.frame(read_sheet(ss = tmpCalc, sheet = 'Calculator - Outdoor'), check.names = FALSE)
-    
+      
     if(tmp2[11,'...2'] == 'Click here to start'){
       tmp2 <- data.frame(read_sheet(ss = tmpCalc, sheet = 'Calculator - Indoor'), check.names = FALSE)
       baseTricks <- na.omit(tmp2[ ,'...36', drop = FALSE])
@@ -22,7 +54,7 @@ TPWdatabaseUpdate <- function(folderURL, updateDate, eventName){
       baseTricks <- setNames(tail(baseTricks, -1), 'BaseTricks')
     }
     
-    pilotName <- tmp2[[1,3]]
+    pilotName <- officialPilotNames[officialPilotNames$email == tmpEmail, 'pilotName']
     mapSelection <- tmp2[[2,3]]
     trickScore <- tmp2[[4,3]]
     kwadScore <- tmp2[[5,3]]
@@ -67,8 +99,8 @@ TPWdatabaseUpdate <- function(folderURL, updateDate, eventName){
                     )
     
     TPWdatabase[[pilotName]][[eventName]] <- tmpList
-    #saveRDS(TPWdatabase, 'D:/Documents/R/Scripts/TPWApp/TPWDatabase.RDS')
-    saveRDS('C:/Users/josha/OneDrive/Documents/GitHub/TPWShinyAppFullServerVersion/TyrantProWhooper/app/Leaderboard/TPWDatabase.RDS')
+    saveRDS(TPWdatabase, 'D:/Documents/R/Scripts/TPWApp/TPWDatabase.RDS')
+    #saveRDS(TPWdatabase, 'C:/Users/josha/OneDrive/Documents/GitHub/TPWShinyAppFullServerVersion/TyrantProWhooper/app/Leaderboard/TPWDatabase.RDS')
   }
   return(TPWdatabase)
 }
@@ -76,12 +108,12 @@ TPWdatabaseUpdate <- function(folderURL, updateDate, eventName){
 #Update Database####
  # folderURL. <- 'https://drive.google.com/drive/folders/1nAecmg0ccWO3p8EHmsD3Q5xh06Sdr5Jg'
  # folderURL. <- 'https://drive.google.com/drive/folders/1NJCvRyrZcszw3MdThqSVVx5AcUY88tIx'
+fileURL. <- 'https://docs.google.com/spreadsheets/d/1G7NemlbABou_bNX7FS9Km7fsuSZO-Aqg9STy_oCUgYM/edit#gid=467078288'
 
-updateDate. <- '2024-01-31'
-eventName. <- 'Event 7'
+updateDate. <- '2023-12-02'
+eventName. <- 'Preseason Event 1'
 
-# TPWdatabase. <- TPWdatabaseUpdate(folderURL = folderURL., updateDate = updateDate., eventName = eventName.)
-
+# TPWdatabase. <- TPWdatabaseUpdate(fileURL = fileURL., updateDate = updateDate., eventName = eventName.)
 
 # TPWdatabase <- list()
-# saveRDS(TPWdatabase, 'D:/Documents/R/Scripts/TPW App/TPWDatabase.RDS')
+# saveRDS(TPWdatabase, 'D:/Documents/R/Scripts/TPWApp/TPWDatabase.RDS')
