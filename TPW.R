@@ -22,7 +22,6 @@ pilotEmailtoName <- function(fileURL){
   }
 }
 
-fileURL <- 'https://docs.google.com/spreadsheets/d/1G7NemlbABou_bNX7FS9Km7fsuSZO-Aqg9STy_oCUgYM/edit#gid=467078288'
 TPWdatabaseUpdate <- function(fileURL, updateDate, eventName){
   TPWdatabase <- readRDS('D:/Documents/R/Scripts/TPWApp/TPWDatabase.RDS')
   #TPWdatabase <- readRDS('C:/Users/josha/OneDrive/Documents/GitHub/TPWShinyAppFullServerVersion/TyrantProWhooper/app/Leaderboard/TPWDatabase.RDS')
@@ -41,6 +40,7 @@ TPWdatabaseUpdate <- function(fileURL, updateDate, eventName){
   for(i in 1:length(tmp$`Please upload your Google Sheets calculator scorecard here.`)){
     #i = 3
     tmpCalc <- tmp$`Please upload your Google Sheets calculator scorecard here.`[i]
+    tmpYTlink <- tmp$`Please share your public/unlisted YouTube video link here`[i]
     tmpEmail <- tmp$Username[i]
     
     tmp2 <- data.frame(read_sheet(ss = tmpCalc, sheet = 'Calculator - Outdoor'), check.names = FALSE)
@@ -95,7 +95,8 @@ TPWdatabaseUpdate <- function(fileURL, updateDate, eventName){
                     'TRICK OF THE WEEK COUNT' = totwCompleted,
                     'SCORE CARD' = tmp3,
                     'EVENT DATE' = updateDate,
-                    'BASE TRICKS' = baseTricks
+                    'BASE TRICKS' = baseTricks,
+                    'YOUTUBE LINK' = tmpYTlink
                     )
     
     TPWdatabase[[pilotName]][[eventName]] <- tmpList
