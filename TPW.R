@@ -31,10 +31,12 @@ TPWdatabaseUpdate <- function(fileURL, updateDate, eventName){
   repeateUploads <- table(tmp$Username)
   repeateUploads <- repeateUploads[repeateUploads >= 2]
   
-  for(j in 1:length(repeateUploads)){
-    tmpDeduped <- tail(tmp[tmp$Username == names(repeateUploads[j]),], 1)
-    tmp <- tmp[tmp$Username != names(repeateUploads[j]), ]
-    tmp <- rbind(tmp, tmpDeduped)
+  if(length(repeateUploads) != 0){
+    for(j in 1:length(repeateUploads)){
+      tmpDeduped <- tail(tmp[tmp$Username == names(repeateUploads[j]),], 1)
+      tmp <- tmp[tmp$Username != names(repeateUploads[j]), ]
+      tmp <- rbind(tmp, tmpDeduped)
+    }
   }
 
   for(i in 1:length(tmp$`Please upload your Google Sheets calculator scorecard here.`)){
@@ -110,7 +112,7 @@ TPWdatabaseUpdate <- function(fileURL, updateDate, eventName){
  # folderURL. <- 'https://drive.google.com/drive/folders/1nAecmg0ccWO3p8EHmsD3Q5xh06Sdr5Jg'
  # folderURL. <- 'https://drive.google.com/drive/folders/1NJCvRyrZcszw3MdThqSVVx5AcUY88tIx'
 fileURL. <- 'https://docs.google.com/spreadsheets/d/1G7NemlbABou_bNX7FS9Km7fsuSZO-Aqg9STy_oCUgYM/edit#gid=467078288'
-
+fileURL. <- 'https://docs.google.com/spreadsheets/d/1x1bNbe298HK6PxcNER84KiJecNMTkfM2Yw5hQasjIoM/edit#gid=467078288'
 updateDate. <- '2023-12-02'
 eventName. <- 'Preseason Event 1'
 
