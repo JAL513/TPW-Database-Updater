@@ -121,5 +121,14 @@ eventName. <- 'Preseason Event 2'
 
 # TPWdatabase. <- TPWdatabaseUpdate(fileURL = fileURL., updateDate = updateDate., eventName = eventName.)
 
+#RESET DATABASE#####
 # TPWdatabase <- list()
 # saveRDS(TPWdatabase, 'D:/Documents/R/Scripts/TPWApp/TPWDatabase.RDS')
+
+#CLEAR EVENT FROM ALL PLAYERS####
+# TPWdatabase <- readRDS('D:/Documents/R/Scripts/TPWApp/TPWDatabase.RDS')
+# for(i in 1:length(TPWdatabase)){
+#   TPWdatabase[[i]] <- TPWdatabase[[i]][names(TPWdatabase[[i]]) != "Preseason Event 2"]
+# }
+# saveRDS(TPWdatabase, 'D:/Documents/R/Scripts/TPWApp/TPWDatabase.RDS')
+
