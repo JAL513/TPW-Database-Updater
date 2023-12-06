@@ -40,7 +40,7 @@ TPWdatabaseUpdate <- function(fileURL, updateDate, eventName){
   }
 
   for(i in 1:length(tmp$`Please upload your Google Sheets calculator scorecard here.`)){
-    #i = 3
+    #i = 1
     tmpCalc <- tmp$`Please upload your Google Sheets calculator scorecard here.`[i]
     tmpYTlink <- tmp$`Please share your public/unlisted YouTube video link here`[i]
     tmpEmail <- tmp$Username[i]
@@ -52,8 +52,10 @@ TPWdatabaseUpdate <- function(fileURL, updateDate, eventName){
       baseTricks <- na.omit(tmp2[ ,'...36', drop = FALSE])
       baseTricks <- setNames(tail(baseTricks, -1), 'BaseTricks')
     } else {
-      baseTricks <- na.omit(tmp2[ ,'...36', drop = FALSE])
-      baseTricks <- setNames(tail(baseTricks, -1), 'BaseTricks')
+      baseTricks <- na.omit(tmp2[ ,'...2', drop = FALSE])
+      baseTricks <- head(baseTricks, -6)
+      baseTricks <- tail(baseTricks, -7)
+      baseTricks <- setNames(baseTricks, 'BaseTricks')
     }
     
     pilotName <- officialPilotNames[officialPilotNames$email == tmpEmail, 'pilotName']
@@ -63,10 +65,10 @@ TPWdatabaseUpdate <- function(fileURL, updateDate, eventName){
     mapScore <- tmp2[[6,3]]
     totalScore <- tmp2[[7,3]]
     
-    K. <- tmp2[[4,6]]
-    W. <- tmp2[[5,6]]
-    A. <- tmp2[[6,6]]
-    D. <- tmp2[[7,6]]
+    K. <- tmp2[[4,'...35']]
+    W. <- tmp2[[5,'...35']]
+    A. <- tmp2[[6,'...35']]
+    D. <- tmp2[[7,'...35']]
     
     maxStreak <- tmp2[[4,10]]
     maxCombo <- tmp2[[5,10]]
@@ -113,8 +115,8 @@ TPWdatabaseUpdate <- function(fileURL, updateDate, eventName){
  # folderURL. <- 'https://drive.google.com/drive/folders/1NJCvRyrZcszw3MdThqSVVx5AcUY88tIx'
 fileURL. <- 'https://docs.google.com/spreadsheets/d/1G7NemlbABou_bNX7FS9Km7fsuSZO-Aqg9STy_oCUgYM/edit#gid=467078288'
 fileURL. <- 'https://docs.google.com/spreadsheets/d/1x1bNbe298HK6PxcNER84KiJecNMTkfM2Yw5hQasjIoM/edit#gid=467078288'
-updateDate. <- '2023-12-02'
-eventName. <- 'Preseason Event 1'
+updateDate. <- '2023-12-16'
+eventName. <- 'Preseason Event 2'
 
 # TPWdatabase. <- TPWdatabaseUpdate(fileURL = fileURL., updateDate = updateDate., eventName = eventName.)
 
