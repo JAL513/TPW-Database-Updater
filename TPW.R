@@ -28,7 +28,7 @@ TPWdatabaseUpdate <- function(fileURL, updateDate, eventName){
   officialPilotNames <- readRDS('C:/Users/josha/OneDrive/Documents/GitHub/TPW-Database-Updater/OfficialPilotNames.RDS')
   
   tmp <- data.frame(read_sheet(ss = fileURL), check.names = FALSE)
-  repeateUploads <- table(tmp$Username)
+  repeateUploads <- table(tmp$`Email Address`)
   repeateUploads <- repeateUploads[repeateUploads >= 2]
   
   if(length(repeateUploads) != 0){
@@ -40,10 +40,10 @@ TPWdatabaseUpdate <- function(fileURL, updateDate, eventName){
   }
 
   for(i in 1:length(tmp$`Please upload your Google Sheets calculator scorecard here.`)){
-    #i = 1
+    #i = 3
     tmpCalc <- tmp$`Please upload your Google Sheets calculator scorecard here.`[i]
     tmpYTlink <- tmp$`Please share your public/unlisted YouTube video link here`[i]
-    tmpEmail <- tmp$Username[i]
+    tmpEmail <- tmp$`Email Address`[i]
     
     tmp2 <- data.frame(read_sheet(ss = tmpCalc, sheet = 'Calculator - Outdoor'), check.names = FALSE)
       
@@ -52,9 +52,11 @@ TPWdatabaseUpdate <- function(fileURL, updateDate, eventName){
       baseTricks <- na.omit(tmp2[ ,'...36', drop = FALSE])
       baseTricks <- setNames(tail(baseTricks, -1), 'BaseTricks')
     } else {
-      baseTricks <- na.omit(tmp2[ ,'...2', drop = FALSE])
-      baseTricks <- head(baseTricks, -6)
-      baseTricks <- tail(baseTricks, -7)
+      baseTricks <- tmp2[11:40,'...2']
+      baseTricks <- as.character(na.omit(baseTricks))
+      
+      # baseTricks <- head(baseTricks, -6)
+      # baseTricks <- tail(baseTricks, -7)
       baseTricks <- setNames(baseTricks, 'BaseTricks')
     }
     
@@ -81,7 +83,7 @@ TPWdatabaseUpdate <- function(fileURL, updateDate, eventName){
     tmp3 <- setNames(tmp3, c('#', 'TRICK', 'POINTS', 'EXECUTION', 'COMBO'))
     tmp3 <- tmp3[, c('#', 'TRICK', 'EXECUTION', 'COMBO', 'POINTS')]
     tmp3 <- na.omit(tmp3)
-    baseTricks <- data.frame(baseTricks, 'EXECUTION' = tmp3[,'EXECUTION'])
+    baseTricks <- data.frame('BaseTricks' = baseTricks, 'EXECUTION' = tmp3[,'EXECUTION'])
     
     tmpList <- list('PILOT NAME' = pilotName,
                     'MAP SELECTION' = mapSelection,
@@ -114,8 +116,10 @@ TPWdatabaseUpdate <- function(fileURL, updateDate, eventName){
 #Update Database####
  # folderURL. <- 'https://drive.google.com/drive/folders/1nAecmg0ccWO3p8EHmsD3Q5xh06Sdr5Jg'
  # folderURL. <- 'https://drive.google.com/drive/folders/1NJCvRyrZcszw3MdThqSVVx5AcUY88tIx'
-fileURL. <- 'https://docs.google.com/spreadsheets/d/1G7NemlbABou_bNX7FS9Km7fsuSZO-Aqg9STy_oCUgYM/edit#gid=467078288'
-fileURL. <- 'https://docs.google.com/spreadsheets/d/1x1bNbe298HK6PxcNER84KiJecNMTkfM2Yw5hQasjIoM/edit#gid=467078288'
+# fileURL. <- 'https://docs.google.com/spreadsheets/d/1G7NemlbABou_bNX7FS9Km7fsuSZO-Aqg9STy_oCUgYM/edit#gid=467078288'
+# fileURL. <- 'https://docs.google.com/spreadsheets/d/1x1bNbe298HK6PxcNER84KiJecNMTkfM2Yw5hQasjIoM/edit#gid=467078288'
+fileURL. <- 'https://docs.google.com/spreadsheets/d/1OInd9C5pqpR04O2Q9gUTj746OL78_66rrG57tQVqF50/edit?resourcekey#gid=664964755'
+
 updateDate. <- '2023-12-16'
 eventName. <- 'Preseason Event 2'
 
