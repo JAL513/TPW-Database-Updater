@@ -40,50 +40,50 @@ TPWdatabaseUpdate <- function(fileURL, updateDate, eventName){
   }
 
   for(i in 1:length(tmp$`Please upload your Google Sheets calculator scorecard here.`)){
-    #i = 2
+    #i = 4
     tmpCalc <- tmp$`Please upload your Google Sheets calculator scorecard here.`[i]
     tmpYTlink <- tmp$`Please share your public/unlisted YouTube video link here`[i]
     tmpEmail <- tmp$`Email Address`[i]
     
     tmp2 <- data.frame(read_sheet(ss = tmpCalc, sheet = 'Calculator - Outdoor'), check.names = FALSE)
       
-    if(tmp2[11,'...2'] == 'Click here to start'){
+    if(tmp2[10,'Pilot'] == 'Click here to start'){
       tmp2 <- data.frame(read_sheet(ss = tmpCalc, sheet = 'Calculator - Indoor'), check.names = FALSE)
-      baseTricks <- na.omit(tmp2[ ,'...36', drop = FALSE])
+      baseTricks <- na.omit(tmp2[ , 43])
       baseTricks <- setNames(tail(baseTricks, -1), 'BaseTricks')
     } else {
-      baseTricks <- tmp2[11:40,'...2']
+      baseTricks <- tmp2[10:39,2]
       baseTricks <- as.character(na.omit(baseTricks))
-      
       # baseTricks <- head(baseTricks, -6)
       # baseTricks <- tail(baseTricks, -7)
       baseTricks <- setNames(baseTricks, 'BaseTricks')
     }
     
     pilotName <- officialPilotNames[officialPilotNames$email == tmpEmail, 'pilotName']
-    mapSelection <- tmp2[[2,3]]
-    trickScore <- tmp2[[4,3]]
-    kwadScore <- tmp2[[5,3]]
-    mapScore <- tmp2[[6,3]]
-    totalScore <- tmp2[[7,3]]
+    mapSelection <- tmp2[[1,3]]
+    trickScore <- tmp2[[3,3]]
+    kwadScore <- tmp2[[4,3]]
+    mapScore <- tmp2[[5,3]]
+    totalScore <- tmp2[[6,3]]
     
-    K. <- tmp2[[4,'...35']]
-    W. <- tmp2[[5,'...35']]
-    A. <- tmp2[[6,'...35']]
-    D. <- tmp2[[7,'...35']]
+    K. <- tmp2[[12,32]]
+    W. <- tmp2[[13,32]]
+    A. <- tmp2[[14,32]]
+    D. <- tmp2[[15,32]]
     
-    maxStreak <- tmp2[[4,10]]
-    maxCombo <- tmp2[[5,10]]
-    highPoint <- tmp2[[6,10]]
-    totwCompleted <- tmp2[[7,10]]
-    
-    tmp3 <- tail(tmp2, -10)
+    maxStreak <- tmp2[[24,30]]
+    maxCombo <- tmp2[[25,30]]
+    highPoint <- tmp2[[26,30]]
+    totwCompleted <- tmp2[[27,30]]
+    adjRawScore <- tmp2[[28,30]]
+
+    tmp3 <- tail(tmp2, -9)
     tmp3 <- tmp3[-c(31:nrow(tmp3)),]
     tmp3 <- tmp3[,-c(6:ncol(tmp3))]
-    tmp3 <- setNames(tmp3, c('#', 'TRICK', 'POINTS', 'EXECUTION', 'COMBO'))
+    tmp3 <- setNames(tmp3, c('#', 'TRICK', 'EXECUTION', 'COMBO', 'POINTS'))
     tmp3 <- tmp3[, c('#', 'TRICK', 'EXECUTION', 'COMBO', 'POINTS')]
     tmp3 <- na.omit(tmp3)
-    baseTricks <- data.frame('BaseTricks' = baseTricks, 'EXECUTION' = tmp3[,'EXECUTION'])
+    baseTricks <- data.frame('BaseTricks' = baseTricks, 'EXECUTION' = unlist(tmp3[,'EXECUTION']))
     
     tmpList <- list('PILOT NAME' = pilotName,
                     'MAP SELECTION' = mapSelection,
@@ -100,6 +100,7 @@ TPWdatabaseUpdate <- function(fileURL, updateDate, eventName){
                     'MAX COMBO' = maxCombo,
                     'HIGHEST POINT TRICK' = highPoint,
                     'TRICK OF THE WEEK COUNT' = totwCompleted,
+                    'ADJ RAW SCORE' = adjRawScore,
                     'SCORE CARD' = tmp3,
                     'EVENT DATE' = updateDate,
                     'BASE TRICKS' = baseTricks,
@@ -113,17 +114,17 @@ TPWdatabaseUpdate <- function(fileURL, updateDate, eventName){
   return(TPWdatabase)
 }
 
-fileURL. <- 'https://docs.google.com/spreadsheets/d/1OInd9C5pqpR04O2Q9gUTj746OL78_66rrG57tQVqF50/edit?resourcekey#gid=664964755'
-fileURL. <- 'https://docs.google.com/spreadsheets/d/1K8XLMirSLHBb_MM2DKU5GS5po19JOghp3O6KvFLmhos/edit#gid=664964755'
-fileURL. <- 'https://docs.google.com/spreadsheets/d/1R8FH46FJAtQt_E1Uxe3bYbL7fZTrqIMgYZS0ddkmZV8/edit#gid=664964755'
-fileURL. <- 'https://docs.google.com/spreadsheets/d/1mvA6LN16fzQy_P0lUpTaMn3fDzs1r3HPlnhIKL6qVFo/edit#gid=664964755'
+# fileURL. <- 'https://docs.google.com/spreadsheets/d/1OInd9C5pqpR04O2Q9gUTj746OL78_66rrG57tQVqF50/edit?resourcekey#gid=664964755'
+# fileURL. <- 'https://docs.google.com/spreadsheets/d/1K8XLMirSLHBb_MM2DKU5GS5po19JOghp3O6KvFLmhos/edit#gid=664964755'
+# fileURL. <- 'https://docs.google.com/spreadsheets/d/1R8FH46FJAtQt_E1Uxe3bYbL7fZTrqIMgYZS0ddkmZV8/edit#gid=664964755'
+fileURL. <- 'https://docs.google.com/spreadsheets/d/1Z8vdYcD7gFWiVRFp_LZMJI3vlimiEN6280Yiu1U_hdw/edit#gid=664964755'
 
 #Update Pilot emails####
 # pilotEmailtoName(fileURL = fileURL.)
 
 #Update Database####
-updateDate. <- '2023-12-16'
-eventName. <- 'Preseason Event 2'
+updateDate. <- '2024-01-16'
+eventName. <- 'Event1'
 
 # TPWdatabase. <- TPWdatabaseUpdate(fileURL = fileURL., updateDate = updateDate., eventName = eventName.)
 
@@ -134,7 +135,7 @@ eventName. <- 'Preseason Event 2'
 #CLEAR EVENT FROM ALL PLAYERS####
 # TPWdatabase <- readRDS('D:/Documents/R/Scripts/TPWApp/TPWDatabase.RDS')
 # for(i in 1:length(TPWdatabase)){
-#   TPWdatabase[[i]] <- TPWdatabase[[i]][names(TPWdatabase[[i]]) != "Preseason Event 2"]
+#   TPWdatabase[[i]] <- TPWdatabase[[i]][names(TPWdatabase[[i]]) != "Event_1"]
 # }
 # saveRDS(TPWdatabase, 'D:/Documents/R/Scripts/TPWApp/TPWDatabase.RDS')
 
