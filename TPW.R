@@ -124,7 +124,7 @@ fileURL. <- 'https://docs.google.com/spreadsheets/d/1Z8vdYcD7gFWiVRFp_LZMJI3vlim
 
 #Update Database####
 updateDate. <- '2024-01-16'
-eventName. <- 'Event1'
+eventName. <- 'Event 1'
 
 # TPWdatabase. <- TPWdatabaseUpdate(fileURL = fileURL., updateDate = updateDate., eventName = eventName.)
 
@@ -135,7 +135,7 @@ eventName. <- 'Event1'
 #CLEAR EVENT FROM ALL PLAYERS####
 # TPWdatabase <- readRDS('D:/Documents/R/Scripts/TPWApp/TPWDatabase.RDS')
 # for(i in 1:length(TPWdatabase)){
-#   TPWdatabase[[i]] <- TPWdatabase[[i]][names(TPWdatabase[[i]]) != "Event_1"]
+#   TPWdatabase[[i]] <- TPWdatabase[[i]][names(TPWdatabase[[i]]) != "Event1"]
 # }
 # saveRDS(TPWdatabase, 'D:/Documents/R/Scripts/TPWApp/TPWDatabase.RDS')
 
