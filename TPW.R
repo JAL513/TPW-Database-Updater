@@ -22,7 +22,7 @@ pilotEmailtoName <- function(fileURL){
   }
 }
 
-TPWdatabaseUpdate <- function(fileURL, updateDate, eventName){
+TPWdatabaseUpdate <- function(fileURL, updateDate, eventName, specificSubmission = NULL){
   TPWdatabase <- readRDS('D:/Documents/R/Scripts/TPWApp/TPWDatabase.RDS')
   #TPWdatabase <- readRDS('C:/Users/josha/OneDrive/Documents/GitHub/TPWShinyAppFullServerVersion/TyrantProWhooper/app/Leaderboard/TPWDatabase.RDS')
   officialPilotNames <- readRDS('C:/Users/josha/OneDrive/Documents/GitHub/TPW-Database-Updater/OfficialPilotNames.RDS')
@@ -38,26 +38,44 @@ TPWdatabaseUpdate <- function(fileURL, updateDate, eventName){
       tmp <- rbind(tmp, tmpDeduped)
     }
   }
+  
+  if(!is.null(specificSubmission)){
+    tmp <- tmp[specificSubmission,]
+  }
 
   for(i in 1:length(tmp$`Please upload your Google Sheets calculator scorecard here.`)){
-    #i = 4
+    #i = 1
     tmpCalc <- tmp$`Please upload your Google Sheets calculator scorecard here.`[i]
     tmpYTlink <- tmp$`Please share your public/unlisted YouTube video link here`[i]
     tmpEmail <- tmp$`Email Address`[i]
+    tmpLocation <- tmp$`Did you fly indoors or outdoors?`[i]
     
-    tmp2 <- data.frame(read_sheet(ss = tmpCalc, sheet = 'Calculator - Outdoor'), check.names = FALSE)
-      
-    if(tmp2[10,'Pilot'] == 'Click here to start'){
+    if(tmpLocation == 'Indoors'){
       tmp2 <- data.frame(read_sheet(ss = tmpCalc, sheet = 'Calculator - Indoor'), check.names = FALSE)
       baseTricks <- na.omit(tmp2[ , 43])
       baseTricks <- setNames(tail(baseTricks, -1), 'BaseTricks')
     } else {
+      tmp2 <- data.frame(read_sheet(ss = tmpCalc, sheet = 'Calculator - Outdoor'), check.names = FALSE)
       baseTricks <- tmp2[10:39,2]
       baseTricks <- as.character(na.omit(baseTricks))
       # baseTricks <- head(baseTricks, -6)
       # baseTricks <- tail(baseTricks, -7)
       baseTricks <- setNames(baseTricks, 'BaseTricks')
     }
+
+    # tmp2 <- data.frame(read_sheet(ss = tmpCalc, sheet = 'Calculator - Outdoor'), check.names = FALSE)
+    #   
+    # if(tmp2[10,'Pilot'] == 'Click here to start'){
+    #   tmp2 <- data.frame(read_sheet(ss = tmpCalc, sheet = 'Calculator - Indoor'), check.names = FALSE)
+    #   baseTricks <- na.omit(tmp2[ , 43])
+    #   baseTricks <- setNames(tail(baseTricks, -1), 'BaseTricks')
+    # } else {
+    #   baseTricks <- tmp2[10:39,2]
+    #   baseTricks <- as.character(na.omit(baseTricks))
+    #   # baseTricks <- head(baseTricks, -6)
+    #   # baseTricks <- tail(baseTricks, -7)
+    #   baseTricks <- setNames(baseTricks, 'BaseTricks')
+    # }
     
     pilotName <- officialPilotNames[officialPilotNames$email == tmpEmail, 'pilotName']
     mapSelection <- tmp2[[1,3]]
@@ -117,25 +135,26 @@ TPWdatabaseUpdate <- function(fileURL, updateDate, eventName){
 # fileURL. <- 'https://docs.google.com/spreadsheets/d/1OInd9C5pqpR04O2Q9gUTj746OL78_66rrG57tQVqF50/edit?resourcekey#gid=664964755'
 # fileURL. <- 'https://docs.google.com/spreadsheets/d/1K8XLMirSLHBb_MM2DKU5GS5po19JOghp3O6KvFLmhos/edit#gid=664964755'
 # fileURL. <- 'https://docs.google.com/spreadsheets/d/1R8FH46FJAtQt_E1Uxe3bYbL7fZTrqIMgYZS0ddkmZV8/edit#gid=664964755'
-fileURL. <- 'https://docs.google.com/spreadsheets/d/1Z8vdYcD7gFWiVRFp_LZMJI3vlimiEN6280Yiu1U_hdw/edit#gid=664964755'
+fileURL. <- 'https://docs.google.com/spreadsheets/d/1TvVQIGp7q3lfrPbi2VvF7K8XUCCWvH99LVNWzXuvi_Q/edit#gid=664964755'
 
 #Update Pilot emails####
-# pilotEmailtoName(fileURL = fileURL.)
+pilotEmailtoName(fileURL = fileURL.)
+officialPilotNames <- readRDS('C:/Users/josha/OneDrive/Documents/GitHub/TPW-Database-Updater/OfficialPilotNames.RDS')
 
 #Update Database####
-updateDate. <- '2024-01-16'
+updateDate. <- '2024-01-20'
 eventName. <- 'Event 1'
-
-# TPWdatabase. <- TPWdatabaseUpdate(fileURL = fileURL., updateDate = updateDate., eventName = eventName.)
+specificSubmission. <- 7
+# TPWdatabase. <- TPWdatabaseUpdate(fileURL = fileURL., updateDate = updateDate., eventName = eventName., specificSubmission = specificSubmission.)
 
 #RESET DATABASE#####
 # TPWdatabase <- list()
 # saveRDS(TPWdatabase, 'D:/Documents/R/Scripts/TPWApp/TPWDatabase.RDS')
 
 #CLEAR EVENT FROM ALL PLAYERS####
-# TPWdatabase <- readRDS('D:/Documents/R/Scripts/TPWApp/TPWDatabase.RDS')
-# for(i in 1:length(TPWdatabase)){
-#   TPWdatabase[[i]] <- TPWdatabase[[i]][names(TPWdatabase[[i]]) != "Event 1"]
-# }
-# saveRDS(TPWdatabase, 'D:/Documents/R/Scripts/TPWApp/TPWDatabase.RDS')
+TPWdatabase <- readRDS('D:/Documents/R/Scripts/TPWApp/TPWDatabase.RDS')
+for(i in 1:length(TPWdatabase)){
+  TPWdatabase[[i]] <- TPWdatabase[[i]][names(TPWdatabase[[i]]) != "Event 1"]
+}
+saveRDS(TPWdatabase, 'D:/Documents/R/Scripts/TPWApp/TPWDatabase.RDS')
 
