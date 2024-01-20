@@ -144,7 +144,7 @@ officialPilotNames <- readRDS('C:/Users/josha/OneDrive/Documents/GitHub/TPW-Data
 #Update Database####
 updateDate. <- '2024-01-20'
 eventName. <- 'Event 1'
-specificSubmission. <- 25:27
+specificSubmission. <- NULL
 # TPWdatabase. <- TPWdatabaseUpdate(fileURL = fileURL., updateDate = updateDate., eventName = eventName., specificSubmission = specificSubmission.)
 
 #RESET DATABASE#####
