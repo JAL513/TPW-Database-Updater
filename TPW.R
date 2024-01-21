@@ -23,8 +23,8 @@ pilotEmailtoName <- function(fileURL){
 }
 
 TPWdatabaseUpdate <- function(fileURL, updateDate, eventName, specificSubmission = NULL){
-  TPWdatabase <- readRDS('D:/Documents/R/Scripts/TPWApp/TPWDatabase.RDS')
-  #TPWdatabase <- readRDS('C:/Users/josha/OneDrive/Documents/GitHub/TPWShinyAppFullServerVersion/TyrantProWhooper/app/Leaderboard/TPWDatabase.RDS')
+  #TPWdatabase <- readRDS('D:/Documents/R/Scripts/TPWApp/TPWDatabase.RDS')
+  TPWdatabase <- readRDS('C:/Users/josha/OneDrive/Documents/GitHub/TPWShinyAppFullServerVersion/TyrantProWhooper/app/Leaderboard/TPWDatabase.RDS')
   officialPilotNames <- readRDS('C:/Users/josha/OneDrive/Documents/GitHub/TPW-Database-Updater/OfficialPilotNames.RDS')
   
   tmp <- data.frame(read_sheet(ss = fileURL), check.names = FALSE)
@@ -126,8 +126,8 @@ TPWdatabaseUpdate <- function(fileURL, updateDate, eventName, specificSubmission
                     )
     
     TPWdatabase[[pilotName]][[eventName]] <- tmpList
-    saveRDS(TPWdatabase, 'D:/Documents/R/Scripts/TPWApp/TPWDatabase.RDS')
-    #saveRDS(TPWdatabase, 'C:/Users/josha/OneDrive/Documents/GitHub/TPWShinyAppFullServerVersion/TyrantProWhooper/app/Leaderboard/TPWDatabase.RDS')
+    #saveRDS(TPWdatabase, 'D:/Documents/R/Scripts/TPWApp/TPWDatabase.RDS')
+    saveRDS(TPWdatabase, 'C:/Users/josha/OneDrive/Documents/GitHub/TPWShinyAppFullServerVersion/TyrantProWhooper/app/Leaderboard/TPWDatabase.RDS')
   }
   return(TPWdatabase)
 }
