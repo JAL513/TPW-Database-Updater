@@ -136,3 +136,8 @@ specificSubmission. <- NULL
 # }
 # saveRDS(TPWdatabase, 'D:/Documents/R/Scripts/TPWApp/TPWDatabase.RDS')
 
+
+#CLEAR PLAYER FROM DATABASE####
+# TPWdatabase <- readRDS('D:/Documents/R/Scripts/TPWApp/TPWDatabase.RDS')
+# TPWdatabase <- TPWdatabase[!names(TPWdatabase) %in% c('FPVDev', 'CMYK FPV')]
+# saveRDS(TPWdatabase, 'D:/Documents/R/Scripts/TPWApp/TPWDatabase.RDS')
