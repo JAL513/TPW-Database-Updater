@@ -17,9 +17,9 @@ pilotEmailtoName <- function(fileURL){
     
     if(length(table(officialPilotNames$pilotName)[table(officialPilotNames$pilotName) == 2]) != 0 ){
       repeatePilotNames <- table(officialPilotNames$pilotName)[table(officialPilotNames$pilotName) == 2]
-      stop(print(repeatePilotNames))
+      print(repeatePilotNames)
+      stop('Pilot Name Repeat')
     }
-    
     saveRDS(officialPilotNames, 'C:/Users/josha/OneDrive/Documents/GitHub/TPW-Database-Updater/OfficialPilotNames.RDS')
   }
   
