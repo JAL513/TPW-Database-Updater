@@ -6,15 +6,23 @@ require(googledrive)
 pilotEmailtoName <- function(fileURL){
   officialPilotNames <- readRDS('C:/Users/josha/OneDrive/Documents/GitHub/TPW-Database-Updater/OfficialPilotNames.RDS')
   tmp <- data.frame(read_sheet(ss = fileURL), check.names = FALSE)
-  tmp2 <- data.frame('email' = tmp$`Email Address`,
+  tmp2 <- data.frame('email' = tolower(tmp$`Email Address`),
                      'pilotName' = tmp$`What's your pilot name?`, 
                      check.names = FALSE)
   
   newNames <- tmp2[!tmp2$email %in% officialPilotNames$email,]
   if(nrow(newNames) >= 1){
+    
     officialPilotNames <- rbind(officialPilotNames, newNames)
+    
+    if(length(table(officialPilotNames$pilotName)[table(officialPilotNames$pilotName) == 2]) != 0 ){
+      repeatePilotNames <- table(officialPilotNames$pilotName)[table(officialPilotNames$pilotName) == 2]
+      stop(print(repeatePilotNames))
+    }
+    
     saveRDS(officialPilotNames, 'C:/Users/josha/OneDrive/Documents/GitHub/TPW-Database-Updater/OfficialPilotNames.RDS')
   }
+  
   repeatPilotNames <- table(officialPilotNames$pilotName)
   repeatPilotNames <- names(repeatPilotNames[repeatPilotNames >= 2])
   if(length(repeatPilotNames) != 0){
@@ -44,10 +52,10 @@ TPWdatabaseUpdate <- function(fileURL, updateDate, eventName, specificSubmission
   }
 
   for(i in 1:length(tmp$`Please upload your Google Sheets calculator scorecard here.`)){
-    #i = 25
+    #i = 21
     tmpCalc <- tmp$`Please upload your Google Sheets calculator scorecard here.`[i]
     tmpYTlink <- tmp$`Please share your public/unlisted YouTube video link here`[i]
-    tmpEmail <- tmp$`Email Address`[i]
+    tmpEmail <- tolower(tmp$`Email Address`[i])
     tmpLocation <- tmp$`Did you fly indoors or outdoors?`[i]
     
     if(tmpLocation == 'Indoors'){
