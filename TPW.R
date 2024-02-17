@@ -115,8 +115,11 @@ TPWdatabaseUpdate <- function(fileURL, updateDate, eventName, specificSubmission
 #event 1
 #fileURL. <- 'https://docs.google.com/spreadsheets/d/1TvVQIGp7q3lfrPbi2VvF7K8XUCCWvH99LVNWzXuvi_Q/edit#gid=664964755'
 
-#event 2
-fileURL. <- 'https://docs.google.com/spreadsheets/d/18yVU5tTDw7Ho8-LyX1vbiIqtgWahSjsdFpkahfs4b78/edit#gid=664964755'
+# #event 2
+# fileURL. <- 'https://docs.google.com/spreadsheets/d/18yVU5tTDw7Ho8-LyX1vbiIqtgWahSjsdFpkahfs4b78/edit#gid=664964755'
+
+#event 3
+fileURL. <-'https://docs.google.com/spreadsheets/d/1d0lGz-qjwcHmcKB452AJSn70zpmVmp5cg148XB74-rs/edit#gid=664964755'
 
 #Update Pilot emails####
 pilotEmailtoName(fileURL = fileURL.)
@@ -124,19 +127,12 @@ officialPilotNames <- readRDS('C:/Users/josha/OneDrive/Documents/GitHub/TPW-Data
 officialPilotNames
 
 #Update Database####
-# updateDate. <- '2024-01-20'
-# eventName. <- 'Event 1'
-# specificSubmission. <- c(7)
-
-updateDate. <- '2024-02-03'
-eventName. <- 'Event 2'
+updateDate. <- '2024-02-17'
+eventName. <- 'Event 3'
 specificSubmission. <- NULL
 
 # TPWdatabase. <- TPWdatabaseUpdate(fileURL = fileURL., updateDate = updateDate., eventName = eventName., specificSubmission = specificSubmission.)
 
-#RESET DATABASE#####
-# TPWdatabase <- list()
-# saveRDS(TPWdatabase, 'D:/Documents/R/Scripts/TPWApp/TPWDatabase.RDS')
 
 #CLEAR EVENT FROM ALL PLAYERS####
 #TPWdatabase <- readRDS('D:/Documents/R/Scripts/TPWApp/TPWDatabase.RDS')
@@ -148,8 +144,11 @@ for(i in 1:length(TPWdatabase)){
 #saveRDS(TPWdatabase, 'D:/Documents/R/Scripts/TPWApp/TPWDatabase.RDS')
 saveRDS(TPWdatabase, 'C:/Users/josha/OneDrive/Documents/GitHub/TPWShinyAppFullServerVersion/TyrantProWhooper/app/Leaderboard/TPWDatabase.RDS')
 
-
 #CLEAR PLAYER FROM DATABASE####
 # TPWdatabase <- readRDS('D:/Documents/R/Scripts/TPWApp/TPWDatabase.RDS')
 # TPWdatabase <- TPWdatabase[!names(TPWdatabase) %in% c('FPVDev', 'CMYK FPV')]
+# saveRDS(TPWdatabase, 'D:/Documents/R/Scripts/TPWApp/TPWDatabase.RDS')
+
+#RESET DATABASE#####
+# TPWdatabase <- list()
 # saveRDS(TPWdatabase, 'D:/Documents/R/Scripts/TPWApp/TPWDatabase.RDS')
