@@ -52,7 +52,7 @@ TPWdatabaseUpdate <- function(fileURL, updateDate, eventName, specificSubmission
   }
 
   for(i in 1:length(tmp$`Please upload your Google Sheets calculator scorecard here.`)){
-    #i = 21
+    #i = 2
     tmpCalc <- tmp$`Please upload your Google Sheets calculator scorecard here.`[i]
     tmpYTlink <- tmp$`Please share your public/unlisted YouTube video link here`[i]
     tmpEmail <- tolower(tmp$`Email Address`[i])
@@ -93,7 +93,7 @@ TPWdatabaseUpdate <- function(fileURL, updateDate, eventName, specificSubmission
     tmp3 <- setNames(tmp3, c('#', 'TRICK', 'EXECUTION', 'COMBO', 'POINTS'))
     tmp3 <- tmp3[, c('#', 'TRICK', 'EXECUTION', 'COMBO', 'POINTS')]
     tmp3 <- na.omit(tmp3)
-    baseTricks <- data.frame('BaseTricks' = baseTricks, 'EXECUTION' = unlist(tmp3[,'EXECUTION']))
+    baseTricks <- data.frame('BaseTricks' = as.character(baseTricks), 'EXECUTION' = unlist(tmp3[,'EXECUTION']))
     
     tmpList <- list('PILOT NAME' = pilotName,
                     'MAP SELECTION' = mapSelection,
@@ -127,7 +127,7 @@ TPWdatabaseUpdate <- function(fileURL, updateDate, eventName, specificSubmission
 # fileURL. <- 'https://docs.google.com/spreadsheets/d/18yVU5tTDw7Ho8-LyX1vbiIqtgWahSjsdFpkahfs4b78/edit#gid=664964755'
 
 #event 3
-fileURL. <-'https://docs.google.com/spreadsheets/d/1d0lGz-qjwcHmcKB452AJSn70zpmVmp5cg148XB74-rs/edit#gid=664964755'
+fileURL. <-'https://docs.google.com/spreadsheets/d/17LFsIZrylG1S_Ui0lAvsPVfiwN_MFVw8_z2qp7wIVJc/edit#gid=664964755'
 
 #Update Pilot emails####
 pilotEmailtoName(fileURL = fileURL.)
@@ -135,8 +135,8 @@ officialPilotNames <- readRDS('C:/Users/josha/OneDrive/Documents/GitHub/TPW-Data
 officialPilotNames
 
 #Update Database####
-updateDate. <- '2024-02-17'
-eventName. <- 'Event 3'
+updateDate. <- '2024-03-03'
+eventName. <- 'Event 4'
 specificSubmission. <- NULL
 
 # TPWdatabase. <- TPWdatabaseUpdate(fileURL = fileURL., updateDate = updateDate., eventName = eventName., specificSubmission = specificSubmission.)
