@@ -139,14 +139,18 @@ updateDate. <- '2024-03-03'
 eventName. <- 'Event 4'
 specificSubmission. <- NULL
 
-# TPWdatabase. <- TPWdatabaseUpdate(fileURL = fileURL., updateDate = updateDate., eventName = eventName., specificSubmission = specificSubmission.)
+TPWdatabase. <- TPWdatabaseUpdate(fileURL = fileURL., updateDate = updateDate., eventName = eventName., specificSubmission = specificSubmission.)
 
-drive_upload(media = 'C:/Users/josha/OneDrive/Documents/GitHub/TPWShinyAppFullServerVersion/TyrantProWhooper/app/Leaderboard/TPWDatabase.RDS',
-             path = 'https://drive.google.com/drive/folders/1p36S4t7MaJjBnEZn0T5UQZqIXDsVdMe-',
-             name = 'TPWDatabase.RDS')
 
-drive_trash(drive_ls('https://drive.google.com/drive/folders/1p36S4t7MaJjBnEZn0T5UQZqIXDsVdMe-'))
-
+{
+  drive_upload(media = 'C:/Users/josha/OneDrive/Documents/GitHub/TPWShinyAppFullServerVersion/TyrantProWhooper/app/Leaderboard/TPWDatabase.RDS',
+               path = 'https://drive.google.com/drive/folders/1p36S4t7MaJjBnEZn0T5UQZqIXDsVdMe-',
+               name = 'TPWDatabase.RDS')
+  
+  Sys.sleep(60 * 5)
+  
+  drive_trash(drive_ls('https://drive.google.com/drive/folders/1p36S4t7MaJjBnEZn0T5UQZqIXDsVdMe-'))
+}
 #CLEAR EVENT FROM ALL PLAYERS####
 # ############TPWdatabase <- readRDS('D:/Documents/R/Scripts/TPWApp/TPWDatabase.RDS')
 # TPWdatabase <- readRDS('C:/Users/josha/OneDrive/Documents/GitHub/TPWShinyAppFullServerVersion/TyrantProWhooper/app/Leaderboard/TPWDatabase.RDS')
