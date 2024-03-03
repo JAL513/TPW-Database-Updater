@@ -141,12 +141,25 @@ specificSubmission. <- NULL
 
 TPWdatabase. <- TPWdatabaseUpdate(fileURL = fileURL., updateDate = updateDate., eventName = eventName., specificSubmission = specificSubmission.)
 
+#Update website####
 {
+  check_minutes <- function() {
+    current_time <- as.POSIXlt(Sys.time())
+    minutes <- current_time$min
+    return(minutes %% 10 == 0 || minutes %% 10 == 5)
+  }
+  
+  while (check_minutes()) {
+    Sys.sleep(60)
+  }  
+
   drive_upload(media = 'C:/Users/josha/OneDrive/Documents/GitHub/TPWShinyAppFullServerVersion/TyrantProWhooper/app/Leaderboard/TPWDatabase.RDS',
                path = 'https://drive.google.com/drive/folders/1p36S4t7MaJjBnEZn0T5UQZqIXDsVdMe-',
                name = 'TPWDatabase.RDS')
   
-  Sys.sleep(60 * 5)
+  while (!check_minutes()) {
+    Sys.sleep(10)
+  }  
   
   drive_trash(drive_ls('https://drive.google.com/drive/folders/1p36S4t7MaJjBnEZn0T5UQZqIXDsVdMe-'))
 }
