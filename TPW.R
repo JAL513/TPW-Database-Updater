@@ -152,7 +152,7 @@ TPWdatabase. <- TPWdatabaseUpdate(fileURL = fileURL., updateDate = updateDate., 
   }
   
   while (check_minutes()) {
-    Sys.sleep(60)
+    Sys.sleep(15)
   }  
 
   drive_upload(media = 'C:/Users/josha/OneDrive/Documents/GitHub/TPWShinyAppFullServerVersion/TyrantProWhooper/app/Leaderboard/TPWDatabase.RDS',
@@ -160,7 +160,7 @@ TPWdatabase. <- TPWdatabaseUpdate(fileURL = fileURL., updateDate = updateDate., 
                name = 'TPWDatabase.RDS')
   
   while (!check_minutes()) {
-    Sys.sleep(30)
+    Sys.sleep(60)
   }  
   
   drive_trash(drive_ls('https://drive.google.com/drive/folders/1p36S4t7MaJjBnEZn0T5UQZqIXDsVdMe-'))
@@ -175,15 +175,18 @@ TPWdatabase. <- TPWdatabaseUpdate(fileURL = fileURL., updateDate = updateDate., 
   }
   
   while (check_minutes()) {
-    Sys.sleep(60)
+    Sys.sleep(15)
   }  
   
   drive_upload(media = 'C:/Users/josha/OneDrive/Documents/GitHub/TPWShinyAppFullServerVersion/TyrantProWhooper/app/Leaderboard/app.R',
                path = 'https://drive.google.com/drive/folders/1p36S4t7MaJjBnEZn0T5UQZqIXDsVdMe-',
                name = 'app.R')
+  drive_upload(media = 'C:/Users/josha/OneDrive/Documents/GitHub/TPWShinyAppFullServerVersion/TyrantProWhooper/app/Leaderboard/TrickList.txt',
+               path = 'https://drive.google.com/drive/folders/1p36S4t7MaJjBnEZn0T5UQZqIXDsVdMe-',
+               name = 'TrickList.txt')
   
   while (!check_minutes()) {
-    Sys.sleep(30)
+    Sys.sleep(60)
   }  
   
   drive_trash(drive_ls('https://drive.google.com/drive/folders/1p36S4t7MaJjBnEZn0T5UQZqIXDsVdMe-'))
