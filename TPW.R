@@ -119,14 +119,7 @@ TPWdatabaseUpdate <- function(fileURL, updateDate, eventName, specificSubmission
   return(TPWdatabase)
 }
 
-#File URL####
-#event 1
-#fileURL. <- 'https://docs.google.com/spreadsheets/d/1TvVQIGp7q3lfrPbi2VvF7K8XUCCWvH99LVNWzXuvi_Q/edit#gid=664964755'
-
-# #event 2
-# fileURL. <- 'https://docs.google.com/spreadsheets/d/18yVU5tTDw7Ho8-LyX1vbiIqtgWahSjsdFpkahfs4b78/edit#gid=664964755'
-
-#event 3
+#Submission file URL####
 fileURL. <-'https://docs.google.com/spreadsheets/d/17LFsIZrylG1S_Ui0lAvsPVfiwN_MFVw8_z2qp7wIVJc/edit#gid=664964755'
 
 #Update Pilot emails####
