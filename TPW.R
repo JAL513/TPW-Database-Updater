@@ -134,8 +134,20 @@ specificSubmission. <- NULL
 
 TPWdatabase. <- TPWdatabaseUpdate(fileURL = fileURL., updateDate = updateDate., eventName = eventName., specificSubmission = specificSubmission.)
 
-#Update website####
+#Player Attendance####
+TPWdatabase. <- readRDS('C:/Users/josha/OneDrive/Documents/GitHub/TPWShinyAppFullServerVersion/TyrantProWhooper/app/Leaderboard/TPWDatabase.RDS')
+tst <- lapply(TPWdatabase., names)
+tst2 <- data.frame(do.call(rbind, lapply(tst, FUN = function(x) allEvents %in% x)))
+tst2 <- setNames(tst2, allEvents)
+total_per_row <- rowSums(!is.na(tst2))
+true_per_row <- rowSums(tst2 == TRUE, na.rm = TRUE)
+proportion_true <- true_per_row / total_per_row
+proportion_true <- paste0(round(proportion_true, 3) * 100, '%')
 
+playerParticipation <- cbind(tst2, '%' = proportion_true); playerParticipation
+
+#
+#Update website####
 #database update
 {
   check_minutes <- function() {
