@@ -120,7 +120,7 @@ TPWdatabaseUpdate <- function(fileURL, updateDate, eventName, specificSubmission
 }
 
 #Submission file URL####
-fileURL. <-'https://docs.google.com/spreadsheets/d/11A_xCeajGAShHbTVFlFrfBih7x3UyjkhUZQCaQs1EMQ/edit#gid=664964755'
+fileURL. <- 'https://docs.google.com/spreadsheets/d/1dDPRNRBkmy6CmA_7iJ_IyYDLS22wndFvfAWypuTRkx4/edit#gid=664964755'
 
 #Update Pilot emails####
 pilotEmailtoName(fileURL = fileURL.)
@@ -128,8 +128,8 @@ officialPilotNames <- readRDS('C:/Users/josha/OneDrive/Documents/GitHub/TPW-Data
 officialPilotNames
 
 #Update Database####
-updateDate. <- '2024-03-17'
-eventName. <- 'Event 5'
+updateDate. <- '2024-04-07'
+eventName. <- 'Event 6'
 specificSubmission. <- NULL
 
 TPWdatabase. <- TPWdatabaseUpdate(fileURL = fileURL., updateDate = updateDate., eventName = eventName., specificSubmission = specificSubmission.)
@@ -191,11 +191,11 @@ TPWdatabase. <- TPWdatabaseUpdate(fileURL = fileURL., updateDate = updateDate., 
 # TPWdatabase <- readRDS('C:/Users/josha/OneDrive/Documents/GitHub/TPWShinyAppFullServerVersion/TyrantProWhooper/app/Leaderboard/TPWDatabase.RDS')
 # 
 # for(i in 1:length(TPWdatabase)){
-#   TPWdatabase[[i]] <- TPWdatabase[[i]][names(TPWdatabase[[i]]) != "Event 2"]
+#   TPWdatabase[[i]] <- TPWdatabase[[i]][names(TPWdatabase[[i]]) != "Event 6"]
 # }
 # ###########saveRDS(TPWdatabase, 'D:/Documents/R/Scripts/TPWApp/TPWDatabase.RDS')
 # saveRDS(TPWdatabase, 'C:/Users/josha/OneDrive/Documents/GitHub/TPWShinyAppFullServerVersion/TyrantProWhooper/app/Leaderboard/TPWDatabase.RDS')
-
+# 
 #CLEAR PLAYER FROM DATABASE####
 # TPWdatabase <- readRDS('D:/Documents/R/Scripts/TPWApp/TPWDatabase.RDS')
 # TPWdatabase <- TPWdatabase[!names(TPWdatabase) %in% c('FPVDev', 'CMYK FPV')]
