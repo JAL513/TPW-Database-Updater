@@ -139,12 +139,16 @@ TPWdatabase. <- readRDS('C:/Users/josha/OneDrive/Documents/GitHub/TPWShinyAppFul
 tst <- lapply(TPWdatabase., names)
 tst2 <- data.frame(do.call(rbind, lapply(tst, FUN = function(x) allEvents %in% x)))
 tst2 <- setNames(tst2, allEvents)
+total_per_column <- colSums(!is.na(tst2))
+true_per_column <- colSums(tst2 == TRUE, na.rm = TRUE)
 total_per_row <- rowSums(!is.na(tst2))
 true_per_row <- rowSums(tst2 == TRUE, na.rm = TRUE)
 proportion_true <- true_per_row / total_per_row
-proportion_true <- paste0(round(proportion_true, 3) * 100, '%')
-
-playerParticipation <- cbind(tst2, '%' = proportion_true); playerParticipation
+playerParticipation <- cbind(tst2, '%' = proportion_true)
+playerParticipation <- playerParticipation[order(playerParticipation$`%`, decreasing = TRUE), ]
+playerParticipation$`%` <- paste0(round(playerParticipation$`%`, 3) * 100, '%')
+playerParticipation <- rbind(playerParticipation, 'Count' = c(true_per_column, sum(true_per_column)))
+write.csv(playerParticipation, 'participation.csv'); file.show('participation.csv')
 
 #
 #Update website####
