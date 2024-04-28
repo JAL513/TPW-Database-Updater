@@ -137,6 +137,7 @@ TPWdatabase. <- TPWdatabaseUpdate(fileURL = fileURL., updateDate = updateDate., 
 #Player Attendance####
 TPWdatabase. <- readRDS('C:/Users/josha/OneDrive/Documents/GitHub/TPWShinyAppFullServerVersion/TyrantProWhooper/app/Leaderboard/TPWDatabase.RDS')
 tst <- lapply(TPWdatabase., names)
+allEvents <- sort(unique(as.character(unlist(lapply(TPWdatabase., names)))))
 tst2 <- data.frame(do.call(rbind, lapply(tst, FUN = function(x) allEvents %in% x)))
 tst2 <- setNames(tst2, allEvents)
 total_per_column <- colSums(!is.na(tst2))
