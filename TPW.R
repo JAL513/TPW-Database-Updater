@@ -120,7 +120,7 @@ TPWdatabaseUpdate <- function(fileURL, updateDate, eventName, specificSubmission
 }
 
 #Submission file URL####
-fileURL. <- 'https://docs.google.com/spreadsheets/d/1dDPRNRBkmy6CmA_7iJ_IyYDLS22wndFvfAWypuTRkx4/edit#gid=664964755'
+fileURL. <- 'https://docs.google.com/spreadsheets/d/1kuGPVjfIS9otEprbzlhRG5CSuDY2S5m9p9hKydch42A/edit#gid=664964755'
 
 #Update Pilot emails####
 pilotEmailtoName(fileURL = fileURL.)
@@ -128,8 +128,8 @@ officialPilotNames <- readRDS('C:/Users/josha/OneDrive/Documents/GitHub/TPW-Data
 officialPilotNames
 
 #Update Database####
-updateDate. <- '2024-04-07'
-eventName. <- 'Event 6'
+updateDate. <- '2024-04-27'
+eventName. <- 'Event 7'
 specificSubmission. <- NULL
 
 TPWdatabase. <- TPWdatabaseUpdate(fileURL = fileURL., updateDate = updateDate., eventName = eventName., specificSubmission = specificSubmission.)
