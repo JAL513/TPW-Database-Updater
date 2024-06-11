@@ -39,20 +39,21 @@ TPWdatabaseUpdate <- function(fileURL, updateDate, eventName, specificSubmission
   repeateUploads <- table(tmp$`Email Address`)
   repeateUploads <- repeateUploads[repeateUploads >= 2]
   
+  if(!is.null(specificSubmission)){
+    tmp <- tmp[specificSubmission,]
+  }
+  
   if(length(repeateUploads) != 0){
     for(j in 1:length(repeateUploads)){
-      tmpDeduped <- tail(tmp[tmp$Username == names(repeateUploads[j]),], 1)
+      #j=1
+      tmpDeduped <- tail(tmp[tmp$`Email Address` == names(repeateUploads[j]),], 1)
       tmp <- tmp[tmp$Username != names(repeateUploads[j]), ]
       tmp <- rbind(tmp, tmpDeduped)
     }
   }
-  
-  if(!is.null(specificSubmission)){
-    tmp <- tmp[specificSubmission,]
-  }
 
   for(i in 1:length(tmp$`Please upload your Google Sheets calculator scorecard here.`)){
-    #i = 2
+    #i = 23
     tmpCalc <- tmp$`Please upload your Google Sheets calculator scorecard here.`[i]
     tmpYTlink <- tmp$`Please share your public/unlisted YouTube video link here`[i]
     tmpEmail <- tolower(tmp$`Email Address`[i])
@@ -120,7 +121,7 @@ TPWdatabaseUpdate <- function(fileURL, updateDate, eventName, specificSubmission
 }
 
 #Submission file URL####
-fileURL. <- 'https://docs.google.com/spreadsheets/d/1DBW29e1wAtrrldiqRj5At9xU9jA-XkOIjAyNRJ77ZOo/edit#gid=664964755'
+fileURL. <- 'https://docs.google.com/spreadsheets/d/1DBW29e1wAtrrldiqRj5At9xU9jA-XkOIjAyNRJ77ZOo/edit?gid=664964755#gid=664964755'
 
 #Update Pilot emails####
 pilotEmailtoName(fileURL = fileURL.)
@@ -128,9 +129,9 @@ officialPilotNames <- readRDS('C:/Users/josha/OneDrive/Documents/GitHub/TPW-Data
 officialPilotNames
 
 #Update Database####
-updateDate. <- '2024-05-27'
-eventName. <- 'PRO TIER FINALS 1'
-specificSubmission. <- NULL
+updateDate. <- '2024-06-09'
+eventName. <- 'PRO TIER FINALS 2'
+specificSubmission. <- c(5,13:16)
 
 TPWdatabase. <- TPWdatabaseUpdate(fileURL = fileURL., updateDate = updateDate., eventName = eventName., specificSubmission = specificSubmission.)
 
@@ -204,11 +205,11 @@ write.csv(playerParticipation, 'participation.csv'); file.show('participation.cs
 
 #
 #CLEAR EVENT FROM ALL PLAYERS####
-# ############TPWdatabase <- readRDS('D:/Documents/R/Scripts/TPWApp/TPWDatabase.RDS')
+############TPWdatabase <- readRDS('D:/Documents/R/Scripts/TPWApp/TPWDatabase.RDS')
 # TPWdatabase <- readRDS('C:/Users/josha/OneDrive/Documents/GitHub/TPWShinyAppFullServerVersion/TyrantProWhooper/app/Leaderboard/TPWDatabase.RDS')
 # 
 # for(i in 1:length(TPWdatabase)){
-#   TPWdatabase[[i]] <- TPWdatabase[[i]][names(TPWdatabase[[i]]) != "Event 6"]
+#   TPWdatabase[[i]] <- TPWdatabase[[i]][names(TPWdatabase[[i]]) != "ROOKIE TIER FINALS 2"]
 # }
 # ###########saveRDS(TPWdatabase, 'D:/Documents/R/Scripts/TPWApp/TPWDatabase.RDS')
 # saveRDS(TPWdatabase, 'C:/Users/josha/OneDrive/Documents/GitHub/TPWShinyAppFullServerVersion/TyrantProWhooper/app/Leaderboard/TPWDatabase.RDS')
